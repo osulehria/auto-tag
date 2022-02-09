@@ -22,6 +22,8 @@ builds:
 
 archives:
   - wrap_in_directory: "true"
+    replacements:
+      darwin: macOS
 
 changelog:
   use: github
