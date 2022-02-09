@@ -6,17 +6,19 @@ before:
     - go generate ./...
 
 builds:
-  - env:
-      - CGO_ENABLED=0
-    goos:
-      - linux
-      - darwin
-    goarch:
-      - amd64
-      - arm64
-    ldflags:
-      - -s -w -X main.version={{.Version}} -X main.commit={{.Commit}} -X main.date={{.CommitDate}}
-    mod_timestamp: '{{ .CommitTimestamp }}'
+  - <<: &build_defaults
+      env:
+        - CGO_ENABLED=0
+      ldflags:
+        - -s -w -X main.version={{.Version}} -X main.commit={{.Commit}} -X main.date={{.CommitDate}}
+      mod_timestamp: '{{ .CommitTimestamp }}'
+      id: linux
+      goos: [ linux ]
+      goarch: [ amd64, arm64 ]
+
+  - <<: *build_defaults
+    id: macos
+    goos: [ darwin ]
 
 archives:
   - wrap_in_directory: "true"
