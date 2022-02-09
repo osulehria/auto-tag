@@ -16,6 +16,7 @@ jobs:
         with:
           fetch-depth: 0
           ssh-key: "${{ secrets.COMMIT_KEY }}"
+          token: ''
       - uses: actions/setup-go@v2
         with:
           go-version: '^1.17.0'
@@ -41,5 +42,5 @@ jobs:
       - name: Create Tag for Release
         uses: anothrNick/github-tag-action@1.36.0
         env:
-          GITHUB_TOKEN: ${{ secrets.ACCESS_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.COMMIT_KEY }}
           WITH_V: true
