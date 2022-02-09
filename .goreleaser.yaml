@@ -1,7 +1,4 @@
-project_name: dep-backfiller
-
-release:
-  name_template: "DEP Backfiller CLI {{.Version}}"
+project_name: auto-tag
 
 before:
   hooks:
