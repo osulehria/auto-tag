@@ -1,0 +1,35 @@
+project_name: dep-backfiller
+
+release:
+  name_template: "DEP Backfiller CLI {{.Version}}"
+
+before:
+  hooks:
+    - go mod tidy
+    - go generate ./...
+
+builds:
+  - env:
+      - CGO_ENABLED=0
+    goos:
+      - linux
+      - darwin
+    goarch:
+      - amd64
+      - arm64
+    ldflags:
+      - -s -w -X main.version={{.Version}} -X main.commit={{.Commit}} -X main.date={{.CommitDate}}
+    mod_timestamp: '{{ .CommitTimestamp }}'
+
+archives:
+  - wrap_in_directory: "true"
+
+changelog:
+  use: github
+  sort: asc
+  groups:
+    - title: Changes
+      order: 0
+  filters:
+    exclude:
+      - '^Merge pull request'
